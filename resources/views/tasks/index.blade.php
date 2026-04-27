@@ -896,11 +896,11 @@
             </div>
             <div class="stat-box">
                 <div class="stat-number" id="statActive">0</div>
-                <div class="stat-label">Active</div>
+                <div class="stat-label">Aktif</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number" id="statDone">0</div>
-                <div class="stat-label">Done</div>
+                <div class="stat-label">Selesai</div>
             </div>
         </div>
         
@@ -910,13 +910,13 @@
             <!-- Priority Selector -->
             <div class="priority-selector">
                 <button class="priority-btn" onclick="selectPriority('high')" data-priority="high">
-                    🔴 High
+                    🔴 Tinggi
                 </button>
                 <button class="priority-btn active" onclick="selectPriority('medium')" data-priority="medium">
-                    🟡 Medium
+                    🟡 Sedang
                 </button>
                 <button class="priority-btn" onclick="selectPriority('low')" data-priority="low">
-                    🟢 Low
+                    🟢 Rendah
                 </button>
             </div>
             
@@ -925,41 +925,51 @@
                 <input type="text" 
                        class="task-input" 
                        id="taskInput" 
-                       placeholder="What needs to get done?" 
+                       placeholder="Apa yang perlu diselesaikan?" 
                        required>
                 <button type="submit" class="btn-add">
-                    <i class="bi bi-plus-lg"></i> Add Task
+                    <i class="bi bi-plus-lg"></i> Tambah Tugas
                 </button>
             </form>
             
             <!-- Advanced Options -->
-            <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-                <input type="date" 
-                       class="task-input" 
-                       id="taskDeadline" 
-                       style="flex: 1; padding: 0.875rem 1.25rem; font-size: 0.9rem;">
-                <select class="task-input" id="taskCategory" style="flex: 1; padding: 0.875rem 1.25rem; font-size: 0.9rem;">
-                    <option value="personal">👤 Personal</option>
-                    <option value="work">💼 Work</option>
-                    <option value="shopping">🛒 Shopping</option>
-                    <option value="health">💪 Health</option>
-                    <option value="learning">📚 Learning</option>
-                </select>
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px; position: relative;">
+                    <label style="display: block; color: white; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; padding-left: 0.5rem;">
+                        📅 Tenggat Waktu (Opsional)
+                    </label>
+                    <input type="date" 
+                           class="task-input" 
+                           id="taskDeadline" 
+                           style="width: 100%; padding: 0.875rem 1.25rem; font-size: 0.9rem;">
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="display: block; color: white; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; padding-left: 0.5rem;">
+                        🏷️ Kategori
+                    </label>
+                    <select class="task-input" id="taskCategory" style="width: 100%; padding: 0.875rem 1.25rem; font-size: 0.9rem;">
+                        <option value="personal">👤 Pribadi</option>
+                        <option value="work">💼 Pekerjaan</option>
+                        <option value="shopping">🛒 Belanja</option>
+                        <option value="health">💪 Kesehatan</option>
+                        <option value="learning">📚 Belajar</option>
+                    </select>
+                </div>
             </div>
             
             <!-- Quick Actions -->
             <div style="display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;">
                 <button class="quick-action-btn" onclick="clearCompleted()">
-                    <i class="bi bi-trash"></i> Clear Completed
+                    <i class="bi bi-trash"></i> Hapus Selesai
                 </button>
                 <button class="quick-action-btn" onclick="markAllComplete()">
-                    <i class="bi bi-check-all"></i> Complete All
+                    <i class="bi bi-check-all"></i> Tandai Semua
                 </button>
                 <button class="quick-action-btn" onclick="sortTasks('priority')">
-                    <i class="bi bi-sort-down"></i> Sort by Priority
+                    <i class="bi bi-sort-down"></i> Urutkan Prioritas
                 </button>
                 <button class="quick-action-btn" onclick="sortTasks('date')">
-                    <i class="bi bi-calendar"></i> Sort by Date
+                    <i class="bi bi-calendar"></i> Urutkan Tanggal
                 </button>
             </div>
             
@@ -968,7 +978,7 @@
                 <input type="text" 
                        class="task-input" 
                        id="searchInput" 
-                       placeholder="🔍 Search tasks..." 
+                       placeholder="🔍 Cari tugas..." 
                        oninput="searchTasks()"
                        style="padding: 0.875rem 1.25rem;">
             </div>
@@ -976,13 +986,13 @@
             <!-- Filter Tabs -->
             <div class="filter-tabs">
                 <button class="filter-tab active" onclick="filterTasks('all')">
-                    All
+                    Semua
                 </button>
                 <button class="filter-tab" onclick="filterTasks('active')">
-                    Active
+                    Aktif
                 </button>
                 <button class="filter-tab" onclick="filterTasks('done')">
-                    Done
+                    Selesai
                 </button>
             </div>
             
@@ -992,7 +1002,7 @@
             <!-- Empty State -->
             <div id="emptyState" class="empty-state" style="display: none;">
                 <div class="empty-icon">✨</div>
-                <div class="empty-text">No tasks yet. Add one above!</div>
+                <div class="empty-text">Belum ada tugas. Tambahkan di atas!</div>
             </div>
             
         </div>
@@ -1095,7 +1105,7 @@
                 });
             }
             renderTasks();
-            showNotification('✓ Tasks sorted');
+            showNotification('✓ Tugas diurutkan');
         }
         
         // Clear Completed
@@ -1103,11 +1113,11 @@
             const completedTasks = tasks.filter(t => t.is_completed);
             
             if (completedTasks.length === 0) {
-                showNotification('No completed tasks to clear');
+                showNotification('Tidak ada tugas selesai untuk dihapus');
                 return;
             }
             
-            if (!confirm(`Delete ${completedTasks.length} completed task(s)?`)) return;
+            if (!confirm(`Hapus ${completedTasks.length} tugas yang selesai?`)) return;
             
             for (const task of completedTasks) {
                 await deleteTaskSilent(task.id);
@@ -1116,7 +1126,7 @@
             tasks = tasks.filter(t => !t.is_completed);
             renderTasks();
             updateStats();
-            showNotification(`✓ Cleared ${completedTasks.length} task(s)`);
+            showNotification(`✓ ${completedTasks.length} tugas dihapus`);
         }
         
         // Mark All Complete
@@ -1124,7 +1134,7 @@
             const incompleteTasks = tasks.filter(t => !t.is_completed);
             
             if (incompleteTasks.length === 0) {
-                showNotification('All tasks already completed!');
+                showNotification('Semua tugas sudah selesai!');
                 return;
             }
             
@@ -1135,7 +1145,7 @@
             
             renderTasks();
             updateStats();
-            showNotification(`✓ Marked ${incompleteTasks.length} task(s) as complete`);
+            showNotification(`✓ ${incompleteTasks.length} tugas ditandai selesai`);
         }
         
         // Render Tasks
@@ -1213,24 +1223,24 @@
             modal.className = 'modal-overlay';
             modal.innerHTML = `
                 <div class="modal-content">
-                    <div class="modal-header">Edit Task</div>
-                    <input type="text" class="modal-input" id="editTitle" value="${escapeHtml(task.title)}" placeholder="Task title">
+                    <div class="modal-header">Edit Tugas</div>
+                    <input type="text" class="modal-input" id="editTitle" value="${escapeHtml(task.title)}" placeholder="Judul tugas">
                     <input type="date" class="modal-input" id="editDeadline" value="${task.deadline ? task.deadline.split('T')[0] : ''}">
                     <select class="modal-input" id="editCategory">
-                        <option value="personal" ${task.category === 'personal' ? 'selected' : ''}>👤 Personal</option>
-                        <option value="work" ${task.category === 'work' ? 'selected' : ''}>💼 Work</option>
-                        <option value="shopping" ${task.category === 'shopping' ? 'selected' : ''}>🛒 Shopping</option>
-                        <option value="health" ${task.category === 'health' ? 'selected' : ''}>💪 Health</option>
-                        <option value="learning" ${task.category === 'learning' ? 'selected' : ''}>📚 Learning</option>
+                        <option value="personal" ${task.category === 'personal' ? 'selected' : ''}>👤 Pribadi</option>
+                        <option value="work" ${task.category === 'work' ? 'selected' : ''}>💼 Pekerjaan</option>
+                        <option value="shopping" ${task.category === 'shopping' ? 'selected' : ''}>🛒 Belanja</option>
+                        <option value="health" ${task.category === 'health' ? 'selected' : ''}>💪 Kesehatan</option>
+                        <option value="learning" ${task.category === 'learning' ? 'selected' : ''}>📚 Belajar</option>
                     </select>
                     <select class="modal-input" id="editPriority">
-                        <option value="high" ${task.priority === 'high' ? 'selected' : ''}>🔴 High</option>
-                        <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>🟡 Medium</option>
-                        <option value="low" ${task.priority === 'low' ? 'selected' : ''}>🟢 Low</option>
+                        <option value="high" ${task.priority === 'high' ? 'selected' : ''}>🔴 Tinggi</option>
+                        <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>🟡 Sedang</option>
+                        <option value="low" ${task.priority === 'low' ? 'selected' : ''}>🟢 Rendah</option>
                     </select>
                     <div class="modal-actions">
-                        <button class="btn-modal btn-modal-secondary" onclick="closeModal()">Cancel</button>
-                        <button class="btn-modal btn-modal-primary" onclick="saveEdit()">Save Changes</button>
+                        <button class="btn-modal btn-modal-secondary" onclick="closeModal()">Batal</button>
+                        <button class="btn-modal btn-modal-primary" onclick="saveEdit()">Simpan</button>
                     </div>
                 </div>
             `;
@@ -1269,10 +1279,10 @@
                     Object.assign(task, data.task);
                     renderTasks();
                     closeModal();
-                    showNotification('✓ Task updated successfully!');
+                    showNotification('✓ Tugas berhasil diperbarui!');
                 }
             } catch (error) {
-                showNotification('✗ Failed to update task');
+                showNotification('✗ Gagal memperbarui tugas');
             }
         }
         
@@ -1323,7 +1333,7 @@
         
         // Delete Task
         async function deleteTask(taskId) {
-            if (!confirm('Delete this task?')) return;
+            if (!confirm('Hapus tugas ini?')) return;
             
             try {
                 const response = await fetch(`/tasks/${taskId}`, {
@@ -1339,10 +1349,10 @@
                     tasks = tasks.filter(t => t.id !== taskId);
                     renderTasks();
                     updateStats();
-                    showNotification('✓ Task deleted');
+                    showNotification('✓ Tugas dihapus');
                 }
             } catch (error) {
-                showNotification('✗ Failed to delete task');
+                showNotification('✗ Gagal menghapus tugas');
             }
         }
         
@@ -1374,11 +1384,11 @@
         // Helper Functions
         function getCategoryIcon(category) {
             const icons = {
-                personal: '👤 Personal',
-                work: '💼 Work',
-                shopping: '🛒 Shopping',
-                health: '💪 Health',
-                learning: '📚 Learning'
+                personal: '👤 Pribadi',
+                work: '💼 Pekerjaan',
+                shopping: '🛒 Belanja',
+                health: '💪 Kesehatan',
+                learning: '📚 Belajar'
             };
             return icons[category] || category;
         }
@@ -1394,10 +1404,10 @@
             const diffTime = taskDate - today;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
-            if (diffDays < 0) return 'Overdue';
-            if (diffDays === 0) return 'Today';
-            if (diffDays === 1) return 'Tomorrow';
-            return date.toLocaleDateString();
+            if (diffDays < 0) return 'Terlambat';
+            if (diffDays === 0) return 'Hari ini';
+            if (diffDays === 1) return 'Besok';
+            return date.toLocaleDateString('id-ID');
         }
         
         function isOverdue(deadline, isCompleted) {

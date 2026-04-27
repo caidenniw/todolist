@@ -244,14 +244,14 @@
                 <div class="logo-subtitle">Dive into focused work</div>
             </div>
             
-            <h2 class="auth-title">Create account</h2>
-            <p class="auth-subtitle">Start organizing your tasks today</p>
+            <h2 class="auth-title">Buat akun</h2>
+            <p class="auth-subtitle">Mulai atur tugas Anda hari ini</p>
             
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 
                 <div class="form-group">
-                    <label class="form-label">Full Name</label>
+                    <label class="form-label">Nama Lengkap</label>
                     <input type="text" 
                            name="name" 
                            class="form-control @error('name') is-invalid @enderror" 
@@ -265,12 +265,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Email Address</label>
+                    <label class="form-label">Alamat Email</label>
                     <input type="email" 
                            name="email" 
                            class="form-control @error('email') is-invalid @enderror" 
                            value="{{ old('email') }}"
-                           placeholder="you@example.com" 
+                           placeholder="anda@example.com" 
                            required>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -278,11 +278,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Password</label>
+                    <label class="form-label">Kata Sandi</label>
                     <input type="password" 
                            name="password" 
                            class="form-control @error('password') is-invalid @enderror" 
-                           placeholder="Minimum 8 characters" 
+                           placeholder="Minimal 8 karakter" 
                            required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -290,25 +290,25 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Confirm Password</label>
+                    <label class="form-label">Konfirmasi Kata Sandi</label>
                     <input type="password" 
                            name="password_confirmation" 
                            class="form-control" 
-                           placeholder="Re-enter your password" 
+                           placeholder="Masukkan ulang kata sandi" 
                            required>
                 </div>
                 
                 <button type="submit" class="btn-primary">
-                    Create Account
+                    Buat Akun
                 </button>
             </form>
             
             <div class="divider">
-                <span>or</span>
+                <span>atau</span>
             </div>
             
             <div class="auth-link">
-                Already have an account? <a href="{{ route('login') }}">Sign in</a>
+                Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
             </div>
         </div>
     </div>

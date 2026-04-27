@@ -263,19 +263,19 @@
                 <div class="logo-subtitle">Dive into focused work</div>
             </div>
             
-            <h2 class="auth-title">Welcome back</h2>
-            <p class="auth-subtitle">Sign in to continue to your tasks</p>
+            <h2 class="auth-title">Selamat datang kembali</h2>
+            <p class="auth-subtitle">Masuk untuk melanjutkan ke tugas Anda</p>
             
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 
                 <div class="form-group">
-                    <label class="form-label">Email Address</label>
+                    <label class="form-label">Alamat Email</label>
                     <input type="email" 
                            name="email" 
                            class="form-control @error('email') is-invalid @enderror" 
                            value="{{ old('email') }}"
-                           placeholder="you@example.com" 
+                           placeholder="anda@example.com" 
                            required 
                            autofocus>
                     @error('email')
@@ -284,11 +284,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Password</label>
+                    <label class="form-label">Kata Sandi</label>
                     <input type="password" 
                            name="password" 
                            class="form-control @error('password') is-invalid @enderror" 
-                           placeholder="Enter your password" 
+                           placeholder="Masukkan kata sandi Anda" 
                            required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -298,21 +298,21 @@
                 <div class="form-check mb-4">
                     <input type="checkbox" name="remember" class="form-check-input" id="remember">
                     <label class="form-check-label" for="remember">
-                        Remember me
+                        Ingat saya
                     </label>
                 </div>
                 
                 <button type="submit" class="btn-primary">
-                    Sign In
+                    Masuk
                 </button>
             </form>
             
             <div class="divider">
-                <span>or</span>
+                <span>atau</span>
             </div>
             
             <div class="auth-link">
-                Don't have an account? <a href="{{ route('register') }}">Sign up</a>
+                Belum punya akun? <a href="{{ route('register') }}">Daftar</a>
             </div>
         </div>
     </div>
