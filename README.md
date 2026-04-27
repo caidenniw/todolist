@@ -1,59 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌊 Dive - Task Management App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Modern task management application with ocean-themed UI built with Laravel and Bootstrap 5.
 
-## About Laravel
+## ✨ Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 User Authentication (Login/Register)
+- ✅ Task Management (CRUD)
+- 🎯 Priority System (High, Medium, Low)
+- 📁 Categories (Work, Personal, Shopping, Health, Learning)
+- 📅 Deadline Management
+- 🔍 Search & Filter
+- 📊 Statistics Dashboard
+- 🎨 Modern Ocean Blue Theme
+- 📱 Fully Responsive
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Local Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Requirements
+- PHP 8.2+
+- Composer
+- MySQL/MariaDB
 
-## Learning Laravel
+### Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+# Clone repository
+git clone <your-repo-url>
+cd todolist
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Install dependencies
+composer install
 
-## Laravel Sponsors
+# Setup environment
+cp .env.example .env
+php artisan key:generate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Configure database in .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=todolist
+DB_USERNAME=root
+DB_PASSWORD=
 
-### Premium Partners
+# Run migrations
+php artisan migrate --seed
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Start server
+php artisan serve
+```
 
-## Contributing
+Visit: `http://localhost:8000`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Test Account:**
+- Email: `test@example.com`
+- Password: `password`
 
-## Code of Conduct
+## 🚂 Deploy to Railway
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Push to GitHub
 
-## Security Vulnerabilities
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin <your-github-repo>
+git push -u origin main
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Deploy on Railway
 
-## License
+1. Go to [Railway.app](https://railway.app)
+2. Click "New Project"
+3. Select "Deploy from GitHub repo"
+4. Choose your repository
+5. Add MySQL database:
+   - Click "New" → "Database" → "Add MySQL"
+6. Configure environment variables:
+   - Railway will auto-detect Laravel
+   - Add these variables in your service settings:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```env
+APP_NAME=Dive
+APP_ENV=production
+APP_KEY=base64:YOUR_KEY_HERE
+APP_DEBUG=false
+APP_URL=https://your-app.railway.app
+
+DB_CONNECTION=mysql
+DB_HOST=${{MySQL.MYSQL_HOST}}
+DB_PORT=${{MySQL.MYSQL_PORT}}
+DB_DATABASE=${{MySQL.MYSQL_DATABASE}}
+DB_USERNAME=${{MySQL.MYSQL_USER}}
+DB_PASSWORD=${{MySQL.MYSQL_PASSWORD}}
+
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+```
+
+7. Deploy!
+
+### 3. Generate APP_KEY
+
+```bash
+php artisan key:generate --show
+```
+
+Copy the output and paste to Railway's `APP_KEY` variable.
+
+### 4. Run Migrations (First Deploy)
+
+Railway will automatically run migrations on deploy via `nixpacks.toml`.
+
+## 📝 Environment Variables for Railway
+
+Required variables:
+- `APP_NAME` - Application name
+- `APP_ENV` - Set to `production`
+- `APP_KEY` - Generate with `php artisan key:generate --show`
+- `APP_DEBUG` - Set to `false` for production
+- `APP_URL` - Your Railway app URL
+- `DB_*` - Database credentials (auto-filled by Railway MySQL)
+
+## 🎨 Tech Stack
+
+- **Backend:** Laravel 12
+- **Frontend:** Bootstrap 5, Vanilla JavaScript
+- **Database:** MySQL
+- **Hosting:** Railway (recommended)
+
+## 📄 License
+
+Open-source - Free to use for personal and educational projects.
+
+---
+
+**Dive into focused work.** 🌊
