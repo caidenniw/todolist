@@ -194,6 +194,12 @@
                 </div>
             @endif
             
+            @if(session('email_failed'))
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Email OTP gagal dikirim. Silakan klik "Kirim Ulang" di bawah.
+                </div>
+            @endif
+            
             <form action="{{ route('otp.verify.submit') }}" method="POST">
                 @csrf
                 <input type="text" 

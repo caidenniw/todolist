@@ -63,13 +63,24 @@ class AuthController extends Controller
             'is_verified' => false,
         ]);
 
-       // 3. Kirim Email OTP
-        Mail::to($user->email)->send(new SendOtpMail($otp));
+       // 3. Kirim Email OTP dengan timeout protection
+        try {
+            // Set timeout 10 detik untuk kirim email
+            ini_set('max_execution_time', 10);
+            
+            Mail::to($user->email)->send(new SendOtpMail($otp));
+        } catch (\Exception $e) {
+            // Log error tapi tetap lanjut
+            \Log::error('Failed to send OTP email: ' . $e->getMessage());
+            
+            // Simpan info bahwa email gagal dikirim
+            session()->flash('email_failed', true);
+        }
 
         // 4. Langsung login-kan session-nya
         Auth::login($user);
 
-        // 5. Arahkan ke halaman verifikasi OTP (bukan ke tasks.index)
+        // 5. Arahkan ke halaman verifikasi OTP
         return redirect()->route('otp.verify');
     }
 
