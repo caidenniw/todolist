@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendOtpMail;
 
 class AuthController extends Controller
 {
@@ -50,15 +52,25 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+        $otp = rand(100000, 999999);
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'otp_code' => $otp,
+            'otp_expires_at' => now()->addMinutes(5),
+            'is_verified' => false,
         ]);
 
+       // 3. Kirim Email OTP
+        Mail::to($user->email)->send(new SendOtpMail($otp));
+
+        // 4. Langsung login-kan session-nya
         Auth::login($user);
 
-        return redirect()->route('tasks.index');
+        // 5. Arahkan ke halaman verifikasi OTP (bukan ke tasks.index)
+        return redirect()->route('otp.verify');
     }
 
     public function logout(Request $request)
