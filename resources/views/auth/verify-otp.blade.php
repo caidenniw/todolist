@@ -182,6 +182,13 @@
                 Masukkan kode tersebut di bawah ini.
             </p>
             
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin-bottom: 2rem; border-radius: 8px;">
+                <p style="margin: 0; color: #856404; font-size: 0.9rem; line-height: 1.5;">
+                    <i class="bi bi-info-circle"></i> <strong>Tips:</strong> Jika email tidak masuk dalam 1-2 menit, 
+                    <strong>cek folder Spam/Junk</strong> di email kamu. Email mungkin tersaring sebagai spam.
+                </p>
+            </div>
+            
             @if(session('error'))
                 <div class="alert alert-danger">
                     <i class="bi bi-exclamation-circle"></i> {{ session('error') }}

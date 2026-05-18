@@ -46,8 +46,28 @@ class OtpController extends Controller
             'otp_expires_at' => now()->addMinutes(5),
         ]);
 
-        Mail::to($user->email)->send(new SendOtpMail($otp));
-
-        return back()->with('success', 'Kode OTP baru telah dikirim ke email kamu.');
+        try {
+            // Kirim via SendGrid API langsung
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom(config('mail.from.address'), config('mail.from.name'));
+            $email->setSubject('Kode Verifikasi OTP - Dive');
+            $email->addTo($user->email, $user->name);
+            
+            // Render email template
+            $emailContent = view('emails.otp', ['otp' => $otp])->render();
+            $email->addContent("text/html", $emailContent);
+            
+            $sendgrid = new \SendGrid(env('MAIL_PASSWORD'));
+            $response = $sendgrid->send($email);
+            
+            if ($response->statusCode() == 202) {
+                return back()->with('success', 'Kode OTP baru telah dikirim ke email kamu.');
+            } else {
+                return back()->with('error', 'Gagal mengirim email. Coba lagi.');
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to resend OTP: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim email. Coba lagi.');
+        }
     }
 }

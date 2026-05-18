@@ -63,12 +63,28 @@ class AuthController extends Controller
             'is_verified' => false,
         ]);
 
-       // 3. Kirim Email OTP dengan timeout protection
+       // 3. Kirim Email OTP via SendGrid API
         try {
             // Set timeout 10 detik untuk kirim email
             ini_set('max_execution_time', 10);
             
-            Mail::to($user->email)->send(new SendOtpMail($otp));
+            // Kirim via SendGrid API langsung
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom(config('mail.from.address'), config('mail.from.name'));
+            $email->setSubject('Kode Verifikasi OTP - Dive');
+            $email->addTo($user->email, $user->name);
+            
+            // Render email template
+            $emailContent = view('emails.otp', ['otp' => $otp])->render();
+            $email->addContent("text/html", $emailContent);
+            
+            $sendgrid = new \SendGrid(env('MAIL_PASSWORD'));
+            $response = $sendgrid->send($email);
+            
+            if ($response->statusCode() != 202) {
+                throw new \Exception('SendGrid returned status: ' . $response->statusCode());
+            }
+            
         } catch (\Exception $e) {
             // Log error tapi tetap lanjut
             \Log::error('Failed to send OTP email: ' . $e->getMessage());
